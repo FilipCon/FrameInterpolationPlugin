@@ -8,28 +8,37 @@ using namespace std;
 
 int main(int argc, char** argv) {
     // load images
-    Mat prevFrame = imread(std::string(DATA_DIR + "/I2_0.png"));
-    Mat frame = imread(std::string(DATA_DIR + "/I2_1.png"));
+    auto videoName = std::string(DATA_DIR + "/Las-Vegas-short.webm");
+    VideoCapture capture(videoName);
+    Mat frame, prevFrame;
+    capture >> frame;
+
+    // set final images
+    Mat result(frame.rows, frame.cols, frame.type());
 
     // set number of interpolation
     int totalTimeSteps = 16;
 
-    // set final images
-    Mat result(frame.rows, frame.cols, CV_8UC3);
+    while (true) {
+        capture >> frame;
+        if (!frame.data) break;
 
-    for (int t = 0; t < totalTimeSteps; ++t) {
-        double timeStep = 1.0 / totalTimeSteps * t;
+        if (prevFrame.data) {
+            for (int t = 0; t <= totalTimeSteps; ++t) {
+                double timeStep = 1.0 / totalTimeSteps * t;
 
-        START_CHRONO();
-        // auto output = interpolate(frame.data, prevFrame.data, frame.cols,
-        //                           frame.rows, timeStep);
-        // // 344064
-        // memcpy(result.data, output,
-        //        3 * frame.rows * frame.cols * sizeof(uchar));
-        // freeMem(output);
-        END_CHRONO();
+                START_CHRONO();
+                interpolate(prevFrame.data, frame.data, result.data, frame.cols,
+                            frame.rows, timeStep);
+                END_CHRONO();
 
-        imwrite(DATA_DIR + "/I2_X_" + to_string(t) + ".png", result);
+                imshow("Test", result);
+                waitKey(1);
+            }
+        }
+        swap(frame, prevFrame);
     }
+    capture.release();
+
     return 0;
 }

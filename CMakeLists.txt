@@ -30,8 +30,8 @@ add_library(
   ${sources}
   ${includes}
   )
-
+target_link_libraries(${target} ${OpenCV_LIBS})
 # add tests
 set(test testFrameInterpolation)
 add_executable(${test} main.cpp)
-target_link_libraries(${test} ${target} ${OpenCV_LIBS})
+target_link_libraries(${test} ${target})
