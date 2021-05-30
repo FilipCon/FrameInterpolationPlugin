@@ -19,9 +19,13 @@ in Unity as an unmanaged plugin.
 ├── main.cpp                    # Main executable
 ├── Measure.h                   # Profile code
 ├── README.org                  # Doc
-├── Settings.h                  # Cofigured header file
-└── Settings.h.in               # Cofigurable header file through CMake
+├── Settings.h                  # Configured header file
+└── Settings.h.in               # Configurable header file through CMake
 #+end_src
+
+* Dependencies
+- OpenCV
+- CMake
 
 * Build
 
