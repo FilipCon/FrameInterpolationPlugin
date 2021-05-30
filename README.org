@@ -1,0 +1,31 @@
+#+Title: Frame Interpolation (with OpenCV)
+#+Author: Filip Konstantinos
+#+Email: filipconstantinos@gmail.com
+
+* Introduction
+The project simply uses the OpenCV library to interpolate frames of 360 video
+files in real-time by merging two consecutive frames at the given intervals. It
+creates a dynamic library (=.dll= in Windows, =.so= in Linux) that will be imported
+in Unity as an unmanaged plugin.
+
+* Project Files
+
+#+begin_src
+.
+├── CMakeLists.txt              # Configure project with CMake
+├── data                        # Data dir
+├── FrameInterpolation.cpp      # FrameInterpolation library
+├── FrameInterpolation.h        # FrameInterpolation header
+├── main.cpp                    # Main executable
+├── Measure.h                   # Profile code
+├── README.org                  # Doc
+├── Settings.h                  # Cofigured header file
+└── Settings.h.in               # Cofigurable header file through CMake
+#+end_src
+
+* Build
+
+#+begin_src
+cmake . -B ./build/
+cmake --build ./build/ -j6
+#+end_src
